@@ -1,21 +1,19 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { loginAction } from "../services";
 
 const loginSchema = Yup.object().shape({
   password: Yup.string()
-    .min(8, "Too Short!")
+    .min(3, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required")
 });
 
 class LoginForm extends React.Component {
-  handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      
-      setSubmitting(false);
-    }, 400);
+  handleSubmit = (values) => {
+    loginAction({values, headers: {}})
   };
 
   render() {
