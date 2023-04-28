@@ -5,9 +5,8 @@ import {
 import { useEffect, useState } from 'react';
 import testLogs from '../../../testLogs';
 import { getLogs } from '../../services';
-// import { Theming } from './barChart';
-  const users = testLogs;
-  const columns = [
+
+const columns = [
     {
       field: 'ip',
       name: 'IP address',
@@ -97,24 +96,29 @@ import { getLogs } from '../../services';
   };
 
 
-function Table() {
+function Table({aggregatedLogs, logs}) {
+const getCommonIp = (values) => {
+  const maxCount = values.reduce((max, obj) => {
+    return obj.count > max ? obj.count : max;
+  }, 0);
+  return values.find(d => d.count === maxCount)
 
- const [logs, setLogs] = useState([])
+}
 
- useEffect( () => {
-   getLog()
- }, [])
-
- const getLog = async () => {
-   const { result } = await getLogs()
-   if(result){
-     setLogs(result)
-   }
- }
+const getTotalData = (log) => {
+  console.log(log)
+  let totalCount = 0
+  for (let i = 0; i < log.length; i++) {
+    totalCount += log[i].count;
+  }
+  return totalCount
+  }
    return (
     <div >
+      total data {aggregatedLogs.length > 0 && getTotalData(aggregatedLogs[0].mostActiveIp)} <br></br>
+      most common Ip address : {`${aggregatedLogs.length > 0 && getCommonIp(aggregatedLogs[0].mostActiveIp)._id} used ${getCommonIp(aggregatedLogs[0].mostActiveIp).count} times`}  
     <EuiBasicTable
-    className="eu-table"
+      className="eu-table"
       tableCaption="Basic Table"
       items={logs}
       columns={columns}
