@@ -1,7 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { loginAction } from "../services";
+import { loginAction } from "../../services";
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+
 
 const loginSchema = Yup.object().shape({
   password: Yup.string()
@@ -11,19 +15,27 @@ const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required")
 });
 
-class LoginForm extends React.Component {
-  handleSubmit = (values) => {
-    loginAction({values, headers: {}})
-  };
+const LoginForm = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(localStorage.getItem('token')){
+    navigate('/home')
+      
+    }
+  });
+  const handleSubmit = (values) => {
+    loginAction(values).then(data => {
+    navigate('/home')
 
-  render() {
+    })
+  };
     return (
       <>
         <h1>Login</h1>
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={loginSchema}
-          onSubmit={this.handleSubmit}
+          onSubmit={(values) => handleSubmit(values)}
         >
           {({ isSubmitting }) => {
             return (
@@ -46,7 +58,6 @@ class LoginForm extends React.Component {
         </Formik>
       </>
     );
-  }
 }
 
 export default LoginForm;
