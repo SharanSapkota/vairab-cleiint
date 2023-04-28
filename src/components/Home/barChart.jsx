@@ -9,14 +9,12 @@ Chart.register(CategoryScale);
 
 
 const BarChart = ({aggregatedLogs, logs}) => {
-    console.log(logs)
-    console.log(aggregatedLogs[0].mostActiveIp)
     const ips = aggregatedLogs[0]?.mostActiveIp.map(id => id._id)
     const counts = aggregatedLogs[0]?.mostActiveIp.map(id => id.count)
 
-    const allIps = logs.map(d => d._ip)
-    const timeStamps = logs.map(d=> d.timeStamps)
-    console.log(ips)
+    const allIps = logs.map(d => d.ip)
+    const timeStamps = logs.map(d=> d.timestamp)
+
   const option = {
     responsive: true,
     plugins: {
@@ -29,7 +27,7 @@ const BarChart = ({aggregatedLogs, logs}) => {
   };
   
   
-  const data = {
+  const dataForCounts = {
     labels:ips,
     datasets: [
       {
@@ -41,7 +39,7 @@ const BarChart = ({aggregatedLogs, logs}) => {
   
   };
 
-  const data1 = {
+  const dataForTimeAndIp = {
     labels:allIps,
     datasets: [
       {
@@ -55,8 +53,8 @@ const BarChart = ({aggregatedLogs, logs}) => {
   
   return (
     <div className="Apap">
-      <Bar options={option} data={data} />
-      <Bar options={option} data={data1} />
+      <Bar options={option} data={dataForCounts} />
+      <Bar options={option} data={dataForTimeAndIp} />
       
     </div>
   );
