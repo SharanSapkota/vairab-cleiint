@@ -5,24 +5,22 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 export const loginAction = (values) => {
-    console.log(values)
-    axios.post(`${BASE_URL}/${LOGIN_API}`, values.values, {
+    return axios.post(`${BASE_URL}/${LOGIN_API}`, values, {
     })
     .then(response => {
         console.log(response)
         localStorage.setItem('token', response.data.token)
+        toast("Login successful")
         return response.data
     })
   .catch(error => {
-    console.log(error);
-  });
-}
+  toast(error.response.data.message)
+  });}
 
-export const registerAction = (values) => {
-  console.log(values)
-  axios.post(`${BASE_URL}/${REGISTER_API}`, values)
+
+export const registerAction = (values) => 
+   axios.post(`${BASE_URL}/${REGISTER_API}`, values)
   .then(response => {
-      console.log(response)
       // localStorage.setItem('token', response.data.token)
       toast("User succesfully created!")
       return response.data
@@ -31,7 +29,6 @@ export const registerAction = (values) => {
   toast(error.response.data.message)
  return ;
 });
-}
 
 export const getLogs = () => {
   console.log()
@@ -39,12 +36,14 @@ export const getLogs = () => {
   // if(localStorage.getItem('loggedInUser').role == ADMIN) {
   //   endpoint = GET_LOGS
   // }
-  return axios.get(`${BASE_URL}/${endpoint}`, {
+  return axios.get(`${BASE_URL}/${endpoint}`, { headers:{
+    authorization: `${localStorage.getItem('token')}`}
   })
   .then(response => {
       return response.data
   })
 .catch(error => {
   console.log(error);
+  toast(error.response.data.message)
 });
 }
