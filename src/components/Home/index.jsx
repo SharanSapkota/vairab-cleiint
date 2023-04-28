@@ -12,12 +12,13 @@ const Home = () => {
 
 
   useEffect( () => {
-    const isAuth = localStorage.getItem('token')
+    const isAuth = localStorage.getItem('token');
+
     if(!isAuth){
       navigate('/')
     } else {
-      getLog()
-      getSpecificLogs()
+      getLog();
+      getSpecificLogs();
     }
   }, [])
  
@@ -37,9 +38,8 @@ const Home = () => {
 
   return (
   <>
-
-    <Table aggregatedLogs = {aggregatedLogs} logs={logs}/>
     <BarChart aggregatedLogs = {aggregatedLogs} logs={logs}/>
+    <Table aggregatedLogs = {aggregatedLogs} logs={logs}/>
     </>
   )
   }
