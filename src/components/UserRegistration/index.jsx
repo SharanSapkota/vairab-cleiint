@@ -3,13 +3,14 @@ import { Formik, Form, useField, ErrorMessage } from "formik";
 import { object, string, ref } from "yup";
 import { registerAction } from "../../services";
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
   import 'react-toastify/dist/ReactToastify.css';
 
 
 const RegisterValidation = object().shape({
   firstName: string().required("Required"),
   lastName: string().required("Required"),
-
   email: string()
     .required("Valid email required")
     .email("Valid email required"),
@@ -43,11 +44,11 @@ const Input = ({ name, label, ...props }) => {
 };
 
 function Registration() {
+  const history = useNavigate();
   const handleSubmit = async (values) => {
     const {firstName, lastName, email, password} = values
-    console.log(values)
      await registerAction({firstName, lastName, email, password}).then(data => {
-      console.log(data)
+      history('/')
      }).catch((e) => {
       console.log(e)
      })
