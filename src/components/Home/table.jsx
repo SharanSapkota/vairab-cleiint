@@ -97,16 +97,21 @@ const columns = [
 
 
 function Table({aggregatedLogs, logs}) {
-const getCommonIp = (values) => {
-  const maxCount = values.reduce((max, obj) => {
+const getCommonIp = (mostActiveIp) => {
+  const maxCount = mostActiveIp?.reduce((max, obj) => {
     return obj.count > max ? obj.count : max;
   }, 0);
-  return values.find(d => d.count === maxCount)
+  return mostActiveIp?.find(d => d.count === maxCount)
+}
 
+const getHttpMethod = (mostCommonProtocol) => {
+  const maxCount = mostCommonProtocol?.reduce((max, obj) => {
+    return obj.count > max ? obj.count : max;
+  }, 0);
+  return mostCommonProtocol?.find(d => d.count === maxCount)
 }
 
 const getTotalData = (log) => {
-  console.log(log)
   let totalCount = 0
   for (let i = 0; i < log.length; i++) {
     totalCount += log[i].count;
@@ -115,8 +120,9 @@ const getTotalData = (log) => {
   }
    return (
     <div >
-      total data {aggregatedLogs.length > 0 && getTotalData(aggregatedLogs[0].mostActiveIp)} <br></br>
-      most common Ip address : {`${aggregatedLogs.length > 0 && getCommonIp(aggregatedLogs[0].mostActiveIp)._id} used ${getCommonIp(aggregatedLogs[0].mostActiveIp).count} times`}  
+      total data {aggregatedLogs.length > 0 && getTotalData(aggregatedLogs[0]?.mostActiveIp)} <br></br>
+      most common Ip address : {`${aggregatedLogs.length > 0 && getCommonIp(aggregatedLogs[0]?.mostActiveIp)?._id} used ${getCommonIp(aggregatedLogs[0]?.mostActiveIp)?.count} times`} <br></br>
+      most commonly used HTTP method:{`${aggregatedLogs.length > 0 && getHttpMethod(aggregatedLogs[1]?.mostCommonProtocol)?._id} used ${getHttpMethod(aggregatedLogs[1]?.mostCommonProtocol)?.count} times`}<br></br> 
     <EuiBasicTable
       className="eu-table"
       tableCaption="Basic Table"
