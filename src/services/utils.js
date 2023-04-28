@@ -2,7 +2,7 @@ export const BASE_URL   = "http://localhost:3200";
 
 export const LOGIN_API  = "api/user/login";
 export const REGISTER_API  = "api/user/register";
-
+export const AGGREGATED_LOGS_API  = "api/logs/aggregatedLogs";
 export const GET_LOGS   = "api/logs/getAllLogs"
 
 
