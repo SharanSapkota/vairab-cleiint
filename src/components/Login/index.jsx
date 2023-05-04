@@ -1,19 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { loginAction } from "../../services";
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+import { loginSchema } from "../../common/validation";
 
-
-const loginSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required")
-});
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -26,7 +18,6 @@ const LoginForm = () => {
   const handleSubmit = (values) => {
     loginAction(values).then(data => {
     navigate('/home')
-
     })
   };
     return (

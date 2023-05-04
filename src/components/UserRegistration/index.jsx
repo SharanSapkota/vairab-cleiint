@@ -1,24 +1,11 @@
 import React from "react";
 import { Formik, Form, useField, ErrorMessage } from "formik";
-import { object, string, ref } from "yup";
 import { registerAction } from "../../services";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
   import 'react-toastify/dist/ReactToastify.css';
-
-
-const RegisterValidation = object().shape({
-  firstName: string().required("Required"),
-  lastName: string().required("Required"),
-  email: string()
-    .required("Valid email required")
-    .email("Valid email required"),
-  password: string().min(3, "Password must be of length more than 3").required("Required"),
-  confirmPassword: string()
-    .required("Please confirm your password")
-    .oneOf([ref("password")], "Passwords do not match"),
-});
+import { RegisterValidation } from "../../common/validation";
 
 const Input = ({ name, label, ...props }) => {
   const [field, meta] = useField(name);
@@ -60,7 +47,6 @@ function Registration() {
         initialValues={{
           firstName: "",
           lastName: "",
-
           email: "",
           password: "",
           confirmPassword: "",
