@@ -2,9 +2,6 @@ import {
   EuiBasicTable,
   EuiLink,
 } from '@elastic/eui';
-import { useEffect, useState } from 'react';
-import testLogs from '../../../testLogs';
-import { getLogs } from '../../services';
 
 const columns = [
     {
@@ -34,7 +31,7 @@ const columns = [
       name: 'Method',
       render: (username) => (
         <EuiLink href="#" target="_blank">
-         'fdsfsdf'
+         {username}
         </EuiLink>
       ),
     },
