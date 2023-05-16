@@ -60,4 +60,7 @@ const BarChart = ({aggregatedLogs, logs}) => {
 }
 
 
+
+
+
 export default BarChart
