@@ -49,7 +49,7 @@ const BarChart = ({aggregatedLogs, logs}) => {
       },
     ],
   
-  };
+  }; 
   
   return (
     <div className="Apap">
